@@ -1,0 +1,20 @@
+{
+    "name": "carloswph/linguistics",
+    "description": "Linguistics and language tools in PHP.",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "carlos",
+            "email": "geral@meuppt.pt",            
+            "homepage": "https://wp-helpers.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Linguistics\\": "src/"
+        }
+    }
+}
