@@ -1,3 +1,4 @@
 /vendor/
+/.git/
 index.php
 /node-modules/

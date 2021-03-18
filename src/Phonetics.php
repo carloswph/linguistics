@@ -11,14 +11,25 @@ namespace Linguistics;
 class Phonetics
 {
 
-	public static function symbols(string $string, string $format = 'txt')
+	/**
+	 * Gives the correspondent phonetic IPA symbology to each word
+	 * avoiding repetitions
+	 *
+	 * @since  1.0.0
+	 * @param  string  $string  	The string to be parsed and processed
+	 * @param  string  $format  	Response format, optional
+	 * @param  string  $language 	Language code for future dictionaries available
+	 *
+	 * @return  $results OR echoes text correspondence
+	 */
+	public static function symbols(string $string, string $format = 'txt', string $language = 'en_us')
 	{
-		$words = explode(' ', strtolower($string));
+		$words = array_unique(explode(' ', strtolower(preg_replace("/[^\w\s]/", "", $string))));
 
 		$results = [];
 
 		foreach ($words as $word) {
-			$json = file_get_contents(__DIR__ . '/data/en_us/' . $word[0] . '.json');
+			$json = file_get_contents(__DIR__ . '/data/' . $language . '/' . $word[0] . '.json');
 			$res = json_decode($json, true);
 
 			switch ($format) {
@@ -51,7 +62,7 @@ class Phonetics
 
 	public static function soundex(string $string, string $format = 'txt')
 	{
-		$words = explode(' ', strtolower($string));
+		$words = array_unique(explode(' ', strtolower(preg_replace("/[^\w\s]/", "", $string))));
 
 		$results = [];
 
@@ -87,7 +98,7 @@ class Phonetics
 
 	public static function metaphone(string $string, string $format = 'txt')
 	{
-		$words = explode(' ', strtolower($string));
+		$words = array_unique(explode(' ', strtolower(preg_replace("/[^\w\s]/", "", $string))));
 
 		$results = [];
 
