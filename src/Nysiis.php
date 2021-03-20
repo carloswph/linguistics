@@ -7,6 +7,7 @@ namespace Linguistics;
  *
  * @since   1.1.0
  * @author  Carlos Matos - carlos@wp-helpers.com
+ * @link  https://naldc.nal.usda.gov/download/27833/PDF
  */
 class Nysiis
 {
@@ -18,8 +19,31 @@ class Nysiis
 	{
 		$this->string = strtolower($string);
 		$this->initial = strtoupper($string[0]);
+
+		$this->firstLetters();
+		$this->lastLetters();
+		$this->vowels();
+		$this->consonants();
+		$this->letterH();
+		$this->letterW();
+		$this->digraph();
+		$this->lastChar();
 	}
 
+	/**
+	 * Applies changes required by the algorithm for the first letters
+	 * 
+	 * If the first letters of the name are: 
+	 * --> 'MAC' then change these letters to 'MCC'
+	 * --> 'KN' then change these letters to 'NN'
+	 * --> 'K' then change this letter to 'C'
+	 * --> 'PH' then change these letters to 'FF'
+	 * --> 'PF' then change these letters to 'FF'
+	 * --> 'SCH' then change these letters to 'SSS'
+	 *
+	 * @since 1.1.1
+	 * @return  void
+	 */
 	public function firstLetters()
 	{
 		$three = substr($this->string, 0, 3);
@@ -48,6 +72,17 @@ class Nysiis
 
 	}
 
+	/**
+	 * Applies changes required by the algorithm for the last letters
+	 *
+	 * If the last letters of the name are:
+	 * 'EE' then change these letters to 'Y'
+	 * 'IE' then change these letters to 'Y'
+	 * 'DT' or 'RT' or 'RD' or 'NT' or 'ND' then change these letters to 'D'
+	 *
+	 * @since  1.1.1
+	 * @return  void
+	 */
 	public function lastLetters()
 	{
 		$two = substr($this->string, -2);
@@ -105,6 +140,55 @@ class Nysiis
 
 	}
 
+	public function letterH()
+	{
+		$exploded = str_split($this->string);
+		$vowels = ['a', 'e', 'i', 'o', 'u'];
+
+		for ($i=0; $i < count($exploded); $i++) {
+			if($exploded[$i] === 'h') {
+				if(in_array($exploded[$i + 1], $vowels) || in_array($exploded[$i - 1], $vowels)) {
+
+				} else {
+					unset($exploded[$i]);
+				}
+			} 
+		}
+
+		$this->string = implode($exploded);
+	}
+
+	public function letterW()
+	{
+		$exploded = str_split($this->string);
+		$vowels = ['a', 'e', 'i', 'o', 'u'];
+
+		for ($i=0; $i < count($exploded); $i++) {
+			if($exploded[$i] === 'w') {
+				if(in_array($exploded[$i - 1], $vowels)) {
+					unset($exploded[$i]);
+				}
+			} 
+		}
+
+		$this->string = implode($exploded);
+	}
+
+	public function digraph()
+	{
+		$this->string = str_replace('sch', 'sss', $this->string);
+		$this->string = str_replace('ph', 'ff', $this->string);
+	}
+
+	/**
+	 * Manages rules to the last or second last characters
+	 * --> If the last character of the NYSIIS code is the letter 'S' then remove it.
+	 * --> If the last two characters of the NYSIIS code are the letters 'AY' then replace them with the single character 'Y'.
+	 * --> If the last character of the NYSIIS code is the letter 'A' then remove this letter.
+	 *
+	 * @since  1.1.0
+	 * @return  void
+	 */
 	public function lastChar()
 	{
 		$exploded = str_split($this->string);
@@ -114,9 +198,20 @@ class Nysiis
 			unset($exploded[$last]);
 		}
 
+		if(end($exploded) === 'y' && prev($exploded) === 'a') {
+			$last = count($exploded) - 2;
+			unset($exploded[$last]);
+		}
+
 		$this->string = implode($exploded);
 	}
 
+	/**
+	 * Return the results after applying the full algorithm
+	 *
+	 * @since  1.1.0
+	 * @return  $this->string (uppercase)
+	 */
 	public function results()
 	{
 		return strtoupper($this->string);
