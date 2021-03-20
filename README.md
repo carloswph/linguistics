@@ -1,5 +1,9 @@
 # Linguistics
 
+[![Codacy Security Scan](https://github.com/carloswph/linguistics/actions/workflows/codacy-analysis.yml/badge.svg)](https://github.com/carloswph/linguistics/actions/workflows/codacy-analysis.yml)
+[![License](https://img.shields.io/packagist/l/carloswph/linguistics.svg)](https://packagist.org/packages/carloswph/linguistics)
+
+
 This package aims to provide a comprehensive group of new functions and methods to deal with linguistics and phonetics algorithms commonly used for developing or information technology. While PHP already offers functions to encode strings in metaphone and soundex algorithms, some other useful algorithms can't be reached from native functions.
 
 Also, this package brings a dictionary to provide immediate conversion from almost any English word, from text to IPA phonetic symbols. For this moment, just en_US is available, but there are plans to include other languages or dialects eventually. 
