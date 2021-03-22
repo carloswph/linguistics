@@ -3,6 +3,8 @@
  
 [![Codacy Security Scan](https://github.com/carloswph/linguistics/actions/workflows/codacy-analysis.yml/badge.svg)](https://github.com/carloswph/linguistics/actions/workflows/codacy-analysis.yml)
 [![License](https://img.shields.io/packagist/l/carloswph/linguistics.svg)](https://packagist.org/packages/carloswph/linguistics)
+[![GitHub release](https://img.shields.io/badge/version-1.1.0-blue)](https://github.com/carloswph/linguistics/releases/)
+
 
 **NEW -->** Support to  NYSIIS encoding
 **What's next? -->** Support to Caverphone, Arpabet
