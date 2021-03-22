@@ -1,5 +1,8 @@
 # Linguistics
 
+**NEW -->** Support to  NYSIIS encoding
+**What's next? -->** Support to Caverphone, Arpabet
+ 
 This package aims to provide a comprehensive group of new functions and methods to deal with linguistics and phonetics algorithms commonly used for developing or information technology. While PHP already offers functions to encode strings in metaphone and soundex algorithms, some other useful algorithms can't be reached from native functions.
 
 Also, this package brings a dictionary to provide immediate conversion from almost any English word, from text to IPA phonetic symbols. For this moment, just en_US is available, but there are plans to include other languages or dialects eventually. 
@@ -79,13 +82,35 @@ Returns:
 string(410) "{"to":["\/\u02c8tu\/"," \/t\u0259\/"," \/t\u026a\/"],"be":["\/\u02c8bi\/"," \/bi\/"],"or":["\/\u02c8\u0254\u0279\/"," \/\u025d\/"],"not":["\/\u02c8n\u0251t\/"],"that":["\/\u02c8\u00f0\u00e6t\/"," \/\u00f0\u0259t\/"],"is":["\/\u02c8\u026az\/"," \/\u026az\/"],"the":["\/\u02c8\u00f0\u0259\/"," \/\u00f0\u0259\/"," \/\u00f0i\/"],"question":["\/\u02c8kw\u025bst\u0283\u0259n\/"," \/\u02c8kw\u025b\u0283\u0259n\/"]}"
 */
 ```
+## NYSIIS encoding
+
+From v1.1.0, the Phonetics class was reinforced with an additional method which returns The New York State Identification and Intelligence System Phonetic Code, or NYSIIS, to every single word in a sentence (excluding repeated words). The use follows the same logic of the previous static methods.
+
+```php
+Phonetics::nysiis($str);
+/*
+Returns:
+
+[ to ] => T
+[ be ] => B
+[ or ] => AR
+[ not ] => NAT
+[ that ] => THAT
+[ is ] => A
+[ the ] => TH
+[ question ] => GAASTAAN
+*/
+```
+
+
 
 # Underway
 
 Three other classes are currently underway:
 
-* An encoding class for The New York State Identification and Intelligence System Phonetic Code, commonly known as NYSIIS
 * An encoding class for Caverphone algorithm, versions 1.0 and 2.0
 * An encoding class for Match Rating Approach comparison and string encoding implementation.
+* An interesting legacy encoding on Arpabet algorithm
+* Roger Root encoding?
 
-The next stable version, 1.1.0, should already bring the Nysiis class fully functional.
+The next stable version, 1.2.0, should already bring the Caverphone class, at least compatible for encoding the 1.0 version of this algorithm.

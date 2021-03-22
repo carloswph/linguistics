@@ -1,6 +1,7 @@
 <?php
 
 namespace Linguistics;
+use Linguistics\Nysiis;
 /**
  * Organized use of PHP's phonetics functions and convertion of
  * words and entire sentences to the IPA phonetic symbols.
@@ -60,6 +61,17 @@ class Phonetics
 		}
 	}
 
+	/**
+	 * Gives the correspondent phonetic Soundex algorithm to each word
+	 * avoiding repetitions
+	 *
+	 * @since  1.0.0
+	 * @param  string  $string  	The string to be parsed and processed
+	 * @param  string  $format  	Response format, optional
+	 * @param  string  $language 	Language code for future dictionaries available
+	 *
+	 * @return  $results OR echoes text correspondence
+	 */
 	public static function soundex(string $string, string $format = 'txt')
 	{
 		$words = array_unique(explode(' ', strtolower(preg_replace("/[^\w\s]/", "", $string))));
@@ -96,6 +108,17 @@ class Phonetics
 		}
 	}
 
+	/**
+	 * Gives the correspondent phonetic Metaphone to each word
+	 * avoiding repetitions
+	 *
+	 * @since  1.1.0
+	 * @param  string  $string  	The string to be parsed and processed
+	 * @param  string  $format  	Response format, optional
+	 * @param  string  $language 	Language code for future dictionaries available
+	 *
+	 * @return  $results OR echoes text correspondence
+	 */
 	public static function metaphone(string $string, string $format = 'txt')
 	{
 		$words = array_unique(explode(' ', strtolower(preg_replace("/[^\w\s]/", "", $string))));
@@ -115,6 +138,57 @@ class Phonetics
 
 				case 'json':
 					$results[$word] = metaphone($word);
+					break;
+				
+				default:
+					# code...
+					break;
+			}
+		}
+
+		if($format == 'array') {
+			return $results;
+		}
+
+		if($format == 'json') {
+			return json_encode($results);
+		}
+	}
+
+	/**
+	 * Gives the correspondent phonetic New York State Identification and
+	 * Intelligence System Phonetic Code to each word
+	 * avoiding repetitions
+	 *
+	 * @since  1.1.0
+	 * @param  string  $string  	The string to be parsed and processed
+	 * @param  string  $format  	Response format, optional
+	 * @param  string  $language 	Language code for future dictionaries available
+	 *
+	 * @uses  Nysiis::encode() static method
+	 * @see  Linguistics\Nysiis
+	 *
+	 * @return  $results OR echoes text correspondence
+	 */
+	public static function nysiis(string $string, string $format = 'txt')
+	{
+		$words = array_unique(explode(' ', strtolower(preg_replace("/[^\w\s]/", "", $string))));
+
+		$results = [];
+
+		foreach ($words as $word) {
+
+			switch ($format) {
+				case 'txt':
+					echo '[ ' . $word . ' ] => ' . Nysiis::encode($word) . '<br>';
+					break;
+
+				case 'array':
+					$results[$word] = Nysiis::encode($word);
+					break;
+
+				case 'json':
+					$results[$word] = Nysiis::encode($word);
 					break;
 				
 				default:

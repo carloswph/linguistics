@@ -3,6 +3,7 @@
     "description": "Linguistics and language tools in PHP.",
     "type": "library",
     "license": "MIT",
+    "keywords": ["phonetics", "algorithm", "soundex", "nysiis", "ipa", "metaphone", "language", "english grammar"],
     "authors": [
         {
             "name": "carlos",

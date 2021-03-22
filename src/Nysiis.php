@@ -30,6 +30,12 @@ class Nysiis
 		$this->lastChar();
 	}
 
+	public static function encode(string $string)
+	{
+		$encode = new self($string);
+		return $encode->results();
+	}
+
 	/**
 	 * Applies changes required by the algorithm for the first letters
 	 * 
@@ -94,6 +100,15 @@ class Nysiis
 		}
 	}
 
+	/**
+	 * General vowels processing based on the algorithm
+	 *
+	 * If the current position is a vowel (AEIOU) then if equal to 'EV' then 
+	 * change to 'AF' otherwise change current position to 'A'.
+	 *
+	 * @since  1.1.1
+	 * @return  void
+	 */
 	public function vowels()
 	{
 		$exploded = str_split($this->string);
@@ -114,6 +129,21 @@ class Nysiis
 		$this->string = implode($exploded);
 	}
 
+	/**
+	 * General consonants processing based on the algorithm
+	 *
+	 * If the current position is the letter 'K' then if the next letter 
+	 * is 'N' then replace the current position by 'N' otherwise replace 
+	 * the current position by 'C'
+	 *
+	 * If the current position is the letter:
+	 * --> 'Q' then change the letter to 'G'
+	 * --> 'Z' then change the letter to 'S'
+	 * --> 'M' then change the letter to 'N'
+	 *
+	 * @since  1.1.1
+	 * @return  void
+	 */
 	public function consonants()
 	{
 		$exploded = str_split($this->string);
